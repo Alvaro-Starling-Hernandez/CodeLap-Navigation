@@ -24,12 +24,11 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
@@ -61,6 +60,11 @@ class MainActivity : AppCompatActivity() {
 //                setOf(R.id.home_dest, R.id.deeplink_dest),
 //                drawerLayout)
         // TODO END STEP 9.5
+
+        val drawerLayout : DrawerLayout? = findViewById(R.id.drawer_layout)
+        appBarConfiguration = AppBarConfiguration(
+                setOf(R.id.home_dest, R.id.deeplink_dest),
+                drawerLayout)
 
         setupActionBar(navController, appBarConfiguration)
 
@@ -97,6 +101,8 @@ class MainActivity : AppCompatActivity() {
 //        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
 //        sideNavView?.setupWithNavController(navController)
         // TODO END STEP 9.4
+        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
+        sideNavView?.setupWithNavController(navController)
     }
 
     private fun setupActionBar(navController: NavController,
@@ -107,6 +113,7 @@ class MainActivity : AppCompatActivity() {
 //        // show the up arrow or drawer menu icon
 //        setupActionBarWithNavController(navController, appBarConfig)
         // TODO END STEP 9.6
+        setupActionBarWithNavController(navController, appBarConfig)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -142,4 +149,8 @@ class MainActivity : AppCompatActivity() {
 //        return findNavController(R.id.my_nav_host_fragment).navigateUp(appBarConfiguration)
 //    }
     // TODO END STEP 9.7
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.my_nav_host_fragment).navigateUp(appBarConfiguration)
+    }
 }
